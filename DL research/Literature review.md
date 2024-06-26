@@ -1,35 +1,29 @@
-## Literature review
+## Literature Review
 
-This part will introduce the development of GNN implementation in traffic forecasting. In this part, I shall list a couple of iconic methods. But since the proposed method is still in consideration, it's better to leave this part as a list for now. In final draft, only several literature in this list will be chosen based on their relevance to the proposed method.
+**Graph Neural Network in traffic forecasting**. During the last decade, researchers keep harness the power of deep learning in traffic forecasting to develop flexible, large-scale, and real-time estimation models. However, traditional deep learning models may neglect some interesting properties of transportation networks. For instance, most recent studies using traditional deep learning architectures have used convolutional operators to consider spatial dependencies among data points. While due to the special characteristics of transportation networks, the spatial correlations are not necessarily distributed in Euclidean space. More specifically, imagine there are a railway close to a highway yet in parallel to it. Although they are near to each other in Euclidean distance, these two elements should be categorized into two different transportation system with little spatial correlations. This is where GNNs change the game. Incorporating graph structure into learning process, it turns out GNN is powerful to capture features traditional methods failed to. One of the first attempts comes from the work by Shahsavari[R]. He proposed a graph-oriented model for considering the spatial-temporal correlations between data captured by sensors. In this framework, nodes correspond to the location of sensors with features such as traffic flow, density and speed, and edges represent spatial interrelations forced by the network topology such as length, capacity and direction. Finally, a GNN model is trained in a supervised learning approach to predict short-term future traffic conditions. This work by Shahsavari is exemplified and used as a general framework for following works. Upon the initial attempts towards graph-based learning, later works can be generally categorized into three genres: recurrent GNNs, convolutional GNNs, as well as graph autoencoders and adversarial GNNs. STGCN(spatial-temporal graph convolutional network) was proposed in 2018 by incorporating the convolution operator in the GNN model. STGCN consists of two spatial-temporal convolutional blocks, followed by a fully connected layer. This method is an iconic GNN scheme with conspicuous improvement comparing to baseline such as LSVR, FC-LSTM, FNN, and etc. And STGCN is also the popular baseline method for recent works. Later, Zhao et al.[R] integrated gate recurrent units and graph convolutional networks and proposed T-GCN. It is designed to capture the topological structure of traffic networks while considering spatial dependencies using a GCN. And in 2022, Shin and Yoon[R] proposed a multi-weight traffic graph convolutional network utilizing multi-weighted adjacency matrices for combining more features such as speed limit, distance and the angle between road segments. Moreover, the Seq2Seq model with LSTM units is included to learn temporal relationships from weighted graph convolution. Later, Cui et al. [R]combined the idea of graph convolutional methods and long-short term memory neural network and proposed a SOTA method, namely TGC-LSTM. Defining the neighborhood matric and the free flow reachability matrix, they captured the graph edge properties and high-order neighborhood in the traffic graph. Recently, the efforts have been shifted to attention-based methods to consider the dynamic temporal dependencies. It begun as Guo et al.[R] developed an attention-based spatial-temporal graph convolutional network model(ASTGCN). The model consisted of three independent components for hourly, weekly and for weekly time intervals. And each components is followed by graph convolutions for capturing spatial patterns and standard convolutions for describing temporal features. Based on ASTGCN and inspired by encoder-decoder, Pan et al.[R] proposed ST-MetaNet, a spatial-temporal meta graph attention network for multi-step traffic forecasting. ST-MetaNet consisted of RNN for embedding the sequence of historical data; a Meta-knowledge learner for learning nodes and edges attributes; Meta-GAT for capturing spatial correlations from metaknowledge; and a Meta-RNN for capturing temporal correlations from meta-knowledge. Later in 2022, Chen at al.[R] argued that previous models only consider limited and static external factors into account. Therefore, AARGNN, an attentive attributed recurrent GNN is proposed. AARGNN considers multi static and dynamic factors during the forecasting process. More specifically, they considered road network topology, driving distance, points of interest, road physical properties and incident data as the link-level features; traffic state data as the node-level feature, and weather and data information as the graph-level features. An attention mechanism is also used to identify the contribution of each factor to the prediction tasks. AARGNN showed better accuracy in comparison to SOTA models such as DCRNN, TGC-LSTM and GMAN[R]. 
 
-1. “Short-term traffic forecasting: Modeling and learning spatio-temporal relations in transportation networks using graph neural networks" (2015)
-   1. As one of the first attempts to utilize GNN in traffic forecasting, Shahsavari proposed a method considering the temporal and spatial correlation between sensors in transportation network.
-   2. features captured by sensors are:
-      1. flow
-      2. density
-      3. speed
-   3. in the graph, edges represent the spatial interrelations forced by network topology: length, capacity and directions.
-   4. And the GNN is trained as a supervised learning model to predict short-term future traffic.
-   5. This is an example of naive implementations of GNN in traffic forecasting. Those works' achievement is sketching a graph framework that can interpret the information of transportation science and incorporate machine learning scheme upon it.
-2. “Diffusion convolutional recurrent neural network: Data-driven traffic forecasting"(DCRNN) (2017)
-   1. DCRNN is established to tackle challenges:
-      1. complex spatial dependency on road networks
-      2. non-linear temporal dynamics with changing road conditions
-      3. inherent difficulty of long-term forecasting
-   2. DCRNN incorporates both spatial and temporal dependency in the traffic flow. It captures the spatial dependency using the encoder-decoder architecture with scheduled sampling. Generally speaking, DCRNN models spatial dependency as diffusion process on a directed graph by proposing diffusion convolution.
-   3. DCRNN considers temporal dependencies using diffusion convolutional gated recurrent units with diffusion convolution. 
-   4. Compared with ARIMA, Vector auto-regression, support vector regression, Feed-forward neural network, and fully connected long-short-term-memory.
-3. "Spatial-Temporal Graph Convolutional Network" (STGCN) (2018)
-   1. STGCN aims to tackle the time series prediction problem in traffic domain which enables much faster training speed with fewer parameters. 
-   2. STGCN consists of two spatial-temporal convolutional blocks, followed by a fully connected layer. Each ST-Conv includes two temporal gated convolution layers that surround one spatial graph convolutional layer for considering spatial dependencies. 
-   3. Chebyshev polynomial is used in localizing the filter and therefore do the elimination of parameters. The number of parameter of Cheb poly is restricted by kernel size which determines the maximum radius of the convolution from central nodes.
-   4. Compared with ARIMA, FNN, FC-LSTM, DCRNN
-4. "T-GCN: A Temporal Graph Convolutional Network for Traffic Prediction" (T-GCN) (2018)
-   1. T-GCN manages to capture spatial and temporal dependencies simultaneously by implement a combination of graph convolutional network(GCN) and gated recurrent unit(GRU). 
-      1. GCN is used to learn complex topological structure to capture the spatial dependence
-      2. GRU is used to learn dynamic changes of traffic data to capture the temporal dependence.
-   2. ![image-20240619083719646](C:\Users\hanzh\AppData\Roaming\Typora\typora-user-images\image-20240619083719646.png)This picture illustrate the framework with a much more direct way. 
-   3. And this is basically all of this method. Simple and efficient.
-5. 
-6. Compressible Non-Newtonian Fluid Based Road Traffic Flow Equation Solved by Physical-Informed Rational Neural Network
-   1. 
+**Graph Neural Network in traffic state estimation(TSE)**. Although focus on distinct objectives, TSE and traffic forecasting share many similar methodologies in research. Like the field of traffic forecasting, researches in TSE also transferring their attention to GNNs. For TSE, all methods can be generally categorized into three domains: the model driven approaches, the data-driven approaches and physical-informed deep learning(PIDL) approaches. In model-driven methods, researchers utilize traffic flow models(usually based on fluid dynamics) to predict and estimate traffic states. The commonly used models are based on conservations laws, including the LWR model, ARZ model and METANET model. The data-driven approaches utilize a large volume of real-world traffic data for analysis and modeling, and researchers also use methods such as STGCN, DCRNN mentioned above. The model-based methods is notorious for the complexity of model and incapability of capturing features comprehensively. Although the data-driven methods overcome the drawbacks of model-based ones, the data-driven models requires high-quality and a sufficient amount of data which are rare in practical scenarios. Often due to sparce data, the data-driven methods likely produce the results that are difficult to be explained with domain knowledge, even sometimes nonsense. Therefore, researchers combine two types of methods and propose PIDL approaches. Compared to conventional statistical or model-based methods, PIDL can be better utilize traffic physics information to improve the accuracy and prevision of traffic state estimation. 
+
+[Conclusion papers]
+
+1. A Physical-Informed Deep Learning Paradigm for Traffic State Estimation and Fundamental Diagram Discovery
+2. Physics-Informed Deep Learning for Traffic State Estimation Based on the Traffic Flow Model and Computational Graph Method
+
+## Proposed Research Direction
+
+### Interpretability & Physical-informed learning
+
+**KAN**
+
+Since the TSE and traffic forecasting are divided, we should rearrange the structure of explanation of KAN.
+
+1. KAN has better parametrization ability by its framework
+2. KAN has potential of approximating differential equations and logically suitable for solving traffic flow model prediction.
+3. KAN's framework seems suitable for embedding domain knowledge since the parameters are theoretically interpreted in discrete ways. (My humble opinion)
+4. Right now, there is an demonstration of CNN+KAN, LSTM+KAN.
+   1. challenges: 
+      1. how to design graph structure in KAN and what is the learning process
+      2. More to discuss
+
+### Transferring Learning
+
